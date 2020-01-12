@@ -390,7 +390,7 @@ class Converter
             $this->searchAndReplace('m-'.$btMedia.'-{regex_number}', $twMedia.':m-{regex_number}');
             $this->searchAndReplace('m{regex_string}-'.$btMedia.'-{regex_number}', $twMedia.':m{regex_string}-{regex_number}');
             $this->searchAndReplace('p-'.$btMedia.'-{regex_number}', $twMedia.':p-{regex_number}');
-            $this->searchAndReplace('p{regex_string}-'.$btMedia.'-{regex_number}', $twMedia.':p {regex_string}-{regex_number}');
+            $this->searchAndReplace('p{regex_string}-'.$btMedia.'-{regex_number}', $twMedia.':p{regex_string}-{regex_number}');
         }
     }
 

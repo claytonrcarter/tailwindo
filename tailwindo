@@ -26,19 +26,17 @@ if (file_exists(__DIR__.'/vendor/autoload.php')) {
     
     ->addOption('extensions', 'e', InputOption::VALUE_REQUIRED, 'This allows for custom extensions', 'php,html')
 
+    ->addOption('shim', null, InputOption::VALUE_OPTIONAL, 'Create a BS->TW CSS shim file. Don\'t convert anything.', false)
+
     ->setCode(function (InputInterface $input, OutputInterface $output) {
-        // output arguments and options
+        // get all of the args and options
         $arg = $input->getFirstArgument();
 
         $arg = trim($arg);
 
-        if (empty($arg)) {
-            $output->writeln('<comment>Oops! nothing to convert.</comment>');
-            return -1;
-        }
-        
+        $shim = $input->getOption('shim');
 
-        $replace = (bool) $input->getOption('replace');
+        $replace = (bool) $input->getOption('replace') || $shim !== false;
 
         $is_recursive = (bool) $input->getOption('recursive');
         
@@ -49,6 +47,16 @@ if (file_exists(__DIR__.'/vendor/autoload.php')) {
         })));
 
         $consoleHelper = new ConsoleHelper($output, $is_recursive, $replace, $acceptedExts);
+
+        if ($shim !== false) {
+            $consoleHelper->shimGenerate($shim);
+            return 'blah';
+        }
+
+        if (empty($arg)) {
+            $output->writeln('<comment>Oops! nothing to convert.</comment>');
+            return -1;
+        }
 
         //file?
         if (is_file($arg)) {

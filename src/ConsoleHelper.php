@@ -95,6 +95,20 @@ class ConsoleHelper
         $this->output->writeln('<info>Converted Code: </info>'.$convertedCode);
     }
 
+    public function shimGenerate($shimFile)
+    {
+        $this->converter = new ShimGenerator();
+        $this->overwrite = true;
+
+        $file = $shimFile ?? 'shim.css';
+
+        file_put_contents($file, '');
+
+        $this->fileConvert($file);
+
+        $this->output->writeln('<info>Generated shim: </info>'.$file);
+    }
+
     /**
      * Check whether a file is convertable or not based on its extension.
      *
